@@ -20,6 +20,7 @@ typedef struct _objects_t {
     lv_obj_t *main;
     lv_obj_t *settings;
     lv_obj_t *led_mbtn1;
+    lv_obj_t *led_mbtn2;
     lv_obj_t *routing_1;
     lv_obj_t *routing_2;
     lv_obj_t *about;

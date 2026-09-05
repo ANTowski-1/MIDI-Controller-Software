@@ -23,7 +23,9 @@
 #include <actions.c>
 #include <lvgl.h>
 #include <lv_conf.h>
-#include <display_config.cpp>
+#include "User_Setup.h"
+
+#define LV_CONF_PATH include/lv_conf.h
 
 
 using WireType = decltype(Wire);
@@ -68,13 +70,13 @@ pin_t ledm6 = mcp2.pinA(5);
 // Variables
 uint8_t lastCheckedMuteButton = 1;
 bool currentMuteBtnState = false;
-extern lv_obj_t* led_mbtn1;
-extern lv_obj_t* led_mbtn2;
-extern lv_obj_t* led_mbtn3;
-extern lv_obj_t* led_mbtn4;
-extern lv_obj_t* led_mbtn5;
-extern lv_obj_t* led_mbtn6;
-lv_obj_t* muteButtonLeds[] = {led_mbtn1, led_mbtn2, led_mbtn3, led_mbtn4, led_mbtn5, led_mbtn6};
+lv_obj_t* led_mbtn1;
+lv_obj_t* led_mbtn2;
+// extern lv_obj_t* led_mbtn3;
+// extern lv_obj_t* led_mbtn4;
+// extern lv_obj_t* led_mbtn5;
+// extern lv_obj_t* led_mbtn6;
+lv_obj_t* muteButtonLeds[] = {led_mbtn1, led_mbtn2};
 
 
 // Lib setup
@@ -124,7 +126,7 @@ CCAbsoluteEncoder enc2[] {
 
 void setup() {
     Wire.begin(47, 48);
-    Serial0.begin(9600);
+    Serial.begin(9600);
     // lcd.init();
     // lcd.backlight();
 
@@ -143,7 +145,7 @@ void setup() {
 void loop() {
     Control_Surface.loop();
     
-    lastCheckedMuteButton = (lastCheckedMuteButton + 1) % 6;
+    lastCheckedMuteButton = (lastCheckedMuteButton + 1) % 2;
     currentMuteBtnState = muteButtons[lastCheckedMuteButton].getState();
 
     if (currentMuteBtnState == true) {
@@ -152,8 +154,9 @@ void loop() {
         action_led_color_change(muteButtonLeds[lastCheckedMuteButton], 0x909090);
     };
 
-    last_update = millis();
+
     if (millis() - last_update >= 10) {
         lv_timer_handler();
+        last_update = millis();
     }
 }

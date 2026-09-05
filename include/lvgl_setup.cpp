@@ -1,5 +1,5 @@
 #include <lvgl.h>
-#include <display_config.cpp>
+// #include <display_config.cpp>
 #include <TFT_eSPI.h>
 
 #define BUF_SIZE (320 * 40 * 2)

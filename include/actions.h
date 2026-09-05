@@ -7,10 +7,10 @@
 extern "C" {
 #endif
 
-void action_led_color_change(lv_obj_t *led, uint32_t color);
+extern void action_led_color_change(lv_event_t * e, uint32_t color);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* EEZ_LVGL_UI_EVENTS_H */
+#endif /*EEZ_LVGL_UI_EVENTS_H*/

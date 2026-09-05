@@ -6,7 +6,7 @@
 #include "actions.h"
 #include "vars.h"
 #include "styles.h"
-#include <ui.h>
+#include "ui.h"
 
 #include <string.h>
 
@@ -34,6 +34,15 @@ void create_screen_main() {
             lv_obj_t *obj = lv_led_create(parent_obj);
             objects.led_mbtn1 = obj;
             lv_obj_set_pos(obj, 15, 195);
+            lv_obj_set_size(obj, 32, 32);
+            lv_led_set_color(obj, lv_color_hex(0x909090));
+            lv_led_set_brightness(obj, 255);
+        }
+        {
+            // Led-MBTN2
+            lv_obj_t *obj = lv_led_create(parent_obj);
+            objects.led_mbtn2 = obj;
+            lv_obj_set_pos(obj, 70, 195);
             lv_obj_set_size(obj, 32, 32);
             lv_led_set_color(obj, lv_color_hex(0x909090));
             lv_led_set_brightness(obj, 255);
