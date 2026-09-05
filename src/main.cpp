@@ -24,9 +24,7 @@
 #include <lvgl.h>
 #include <lv_conf.h>
 #include "User_Setup.h"
-
-#define LV_CONF_PATH include/lv_conf.h
-
+#include <lvgl_setup.cpp>
 
 using WireType = decltype(Wire);
 
@@ -139,7 +137,8 @@ void setup() {
     // lcd.clear();
     pinMode(ledm1, OUTPUT);
     digitalWrite(ledm1, 1);
-    lv_init();
+    lvgl_init();
+    //ui_init();
 }
 
 void loop() {

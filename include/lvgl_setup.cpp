@@ -15,8 +15,8 @@ TFT_eSPI tft = TFT_eSPI();
 void lvgl_init(void) {
     tft.init();
     tft.setRotation(1);
+    tft.fillScreen(TFT_DARKGREEN);
     lv_init();
     lv_tick_set_cb(my_tick);
-
-    lv_display_t * disp = lv_tft_espi_create(320, 240, draw_buf, sizeof(draw_buf));
+    lv_display_t *disp = lv_tft_espi_create(320, 240, draw_buf, sizeof(draw_buf));
 }
