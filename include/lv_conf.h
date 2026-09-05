@@ -1,0 +1,10 @@
+#define LV_USE_SPI 0
+#define LV_DRIVER_NO_DISPLAY 0
+#define LV_HOR_RES_MAX 240
+#define LV_VER_RES_MAX 320
+#define LV_COLOR_DEPTH 16
+#define LV_USE_GPU_ESP32S3 1
+// #define LV_USE_LOVYAN_GFX 1
+// #define LV_LGFX_USER_INCLUDE "display_config.cpp"
+// #define LV_LGFX_TYPE LV_LGFX_USE_LOVYAN_BOARD
+#define LV_USE_TFT_ESPI 1

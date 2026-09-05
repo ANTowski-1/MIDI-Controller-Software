@@ -1,8 +1,13 @@
 // Include
 #include <Arduino.h>
+#include <Wire.h>
+
+// Control_Surface include
 #include <Control_Surface.h>
 #include <Arduino_Helpers.h>
-#include <Wire.h>
+#include <AH/Hardware/ExtendedInputOutput/MCP23017.hpp>
+
+// Display Include
 #include <actions.h>
 #include <fonts.h>
 #include <images.h>
@@ -15,12 +20,11 @@
 #include <ui.h>
 #include <ui.c>
 #include <vars.h>
+#include <actions.c>
 #include <lvgl.h>
 #include <lv_conf.h>
-#include <lgfx_config.hpp>
-#include
+#include <display_config.cpp>
 
-#include <AH/Hardware/ExtendedInputOutput/MCP23017.hpp>
 
 using WireType = decltype(Wire);
 
@@ -63,7 +67,6 @@ pin_t ledm6 = mcp2.pinA(5);
 
 // Variables
 uint8_t lastCheckedMuteButton = 1;
-unsigned long currentLedChanged = 'led_mbtn1';
 bool currentMuteBtnState = false;
 extern lv_obj_t* led_mbtn1;
 extern lv_obj_t* led_mbtn2;
@@ -73,9 +76,12 @@ extern lv_obj_t* led_mbtn5;
 extern lv_obj_t* led_mbtn6;
 lv_obj_t* muteButtonLeds[] = {led_mbtn1, led_mbtn2, led_mbtn3, led_mbtn4, led_mbtn5, led_mbtn6};
 
+
 // Lib setup
 USBMIDI_Interface midi;
 //USBDebugMIDI_Interface midi;
+uint16_t last_update{0};
+
 
 // Controls
 CCButton buttons[] {
@@ -117,9 +123,8 @@ CCAbsoluteEncoder enc2[] {
 
 
 void setup() {
-    
     Wire.begin(47, 48);
-    Serial.begin(9600);
+    Serial0.begin(9600);
     // lcd.init();
     // lcd.backlight();
 
@@ -132,6 +137,7 @@ void setup() {
     // lcd.clear();
     pinMode(ledm1, OUTPUT);
     digitalWrite(ledm1, 1);
+    lv_init();
 }
 
 void loop() {
@@ -145,5 +151,9 @@ void loop() {
     } else {
         action_led_color_change(muteButtonLeds[lastCheckedMuteButton], 0x909090);
     };
-    
+
+    last_update = millis();
+    if (millis() - last_update >= 10) {
+        lv_timer_handler();
+    }
 }
