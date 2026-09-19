@@ -11,10 +11,7 @@ Licensed under GPL-3.0.*/
 #include <Wire.h>
 #include <SPI.h>
 
-// Control_Surface include
-#include <Control_Surface.h>
-#include <Arduino_Helpers.h>
-#include <AH/Hardware/ExtendedInputOutput/MCP23017.hpp>
+// Control_Surface header include
 #include "Control_surface_setup.h"
 
 // Display Include

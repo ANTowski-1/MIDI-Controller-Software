@@ -16,17 +16,34 @@ bool ScreenUpdated = false;
 
 OutputBank configBank(1);
 
+int csGetEncVal(int num){
+    return enc[num].getValue();
+}
+bool csGetEncBtnVal(){
+    return (buttons[9].getButtonState() || muteButtons[0].getButtonState());
+}
 
 void setup() {
     Control_Surface.begin();
     Wire.begin(47, 48);
     delay(200);
-    pinMode(BTN_ENC1, INPUT);
-
+    // pinMode(BTN_ENC2, INPUT_PULLUP);
+    // pinMode(BTN3, INPUT_PULLUP);
+    // pinMode(MBTN1, INPUT_PULLUP);
     Serial.begin(9600);
     configBank.select(0);
 
     tft_init();
+    // while (i < 6){
+    //     muteDisplay(i, false);
+    //     fadersDisplay(i, 0);
+    //     lastFadVal[i] = 0;
+    //     lastMBtnState[i] = false;
+    // }
+    //configBank.select(1);
+    enc[1].setSpeedMultiply(1);
+    settings();
+    enc[1].setSpeedMultiply(4);
     lastDispUpdate = millis();
     Serial.println("Setup complete");
 }
