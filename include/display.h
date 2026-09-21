@@ -5,9 +5,10 @@
 #define TFT_MOSI 11
 #define TFT_SCK 12
 
-extern void tft_draw_circle();
-extern void tft_write_txt(int num);
 extern void tft_init();
 extern void muteDisplay(int btnNum, bool muted);
 extern void fadersDisplay(int fadNum, int fadPos);
 extern void lcdClear();
+extern void settings();
+extern void encDisplay(int encNum, int encVal);
+extern void menuTab(int tabNum);
