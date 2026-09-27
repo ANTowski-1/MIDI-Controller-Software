@@ -10,6 +10,7 @@ https://github.com/ANTowski-1/MIDI-Controller-Software/tree/main
 Copyright 2026, Antoni Kołaczek
 Licensed under GPL-3.0.*/
 
+<<<<<<< HEAD
 
 
 // MCP connection data
@@ -21,11 +22,27 @@ MCP23017<WireType> mcp {
     0x25,
 };
 MCP23017<WireType> mcp2 {
+=======
+// Control Surface Includes
+#include <Control_Surface.h>
+#include <Arduino_Helpers.h>
+#include <AH/Hardware/ExtendedInputOutput/MCP23017.hpp>
+
+// MCP connection data
+using WireType = decltype(Wire);
+
+MCP23017<WireType> mcp2 {
+    Wire,
+    0x25,
+};
+MCP23017<WireType> mcp {
+>>>>>>> from-work-repo/clean
     Wire,
     0x24,
 };
 
 // MCP Pins definitions
+<<<<<<< HEAD
 pin_t MBTN1 = mcp2.pinB(0);
 pin_t MBTN2 = mcp2.pinB(1);
 pin_t MBTN3 = mcp2.pinB(2);
@@ -59,6 +76,47 @@ pin_t ledm6 = mcp2.pinA(5);
 USBMIDI_Interface midi;
 //USBDebugMIDI_Interface midi;
 
+=======
+pin_t MBTN1 = mcp.pinB(0);
+pin_t MBTN2 = mcp.pinB(1);
+pin_t MBTN3 = mcp.pinB(2);
+pin_t MBTN4 = mcp.pinB(3);
+pin_t MBTN5 = mcp.pinB(4);
+pin_t MBTN6 = mcp.pinB(5);
+pin_t BTN2 = mcp.pinA(6);
+
+pin_t BTN_ENC1 = mcp2.pinA(2);
+pin_t BTN_ENC2 = mcp2.pinA(5);
+pin_t BTN1 = mcp2.pinA(6);
+
+pin_t BTN3 = mcp2.pinB(0);
+pin_t BTN4 = mcp2.pinB(1);
+pin_t BTN5 = mcp2.pinB(2);
+pin_t BTN6 = mcp2.pinB(3);
+pin_t BTN7 = mcp2.pinB(4);
+pin_t BTN8 = mcp2.pinB(5);
+pin_t BTN9 = mcp2.pinB(6);
+
+pin_t ledm1 = mcp.pinA(0);
+pin_t ledm2 = mcp.pinA(1);
+pin_t ledm3 = mcp.pinA(2);
+pin_t ledm4 = mcp.pinA(3);
+pin_t ledm5 = mcp.pinA(4);
+pin_t ledm6 = mcp.pinA(5);
+
+
+
+// Transport interfaces
+USBMIDI_Interface USB_MIDI;
+HardwareSerialMIDI_Interface SERIAL_MIDI(Serial1, MIDI_BAUD);
+// USBDebugMIDI_Interface DEBUG_MIDI {115200};
+// BluetoothMIDI_Interface BLE_MIDI;
+HardwareSerialDebugMIDI_Interface DEBUG_MIDI {Serial0, 115200};
+
+// Pipes for connecting them
+BidirectionalMIDI_PipeFactory<2> pipes;
+MIDI_Pipe pipe_tx1;
+>>>>>>> from-work-repo/clean
 
 // Controls
 CCButton buttons[] {
@@ -71,7 +129,11 @@ CCButton buttons[] {
     {BTN7, {116, Channel_1}},
     {BTN8, {117, Channel_1}},
     {BTN9, {118, Channel_1}},
+<<<<<<< HEAD
     {BTN_ENC2, {119, Channel_1}},
+=======
+    {BTN_ENC1, {119, Channel_1}},
+>>>>>>> from-work-repo/clean
 };
 
 CCButtonLatched muteButtons[] {
@@ -93,7 +155,11 @@ CCPotentiometer pots[] {
 };
 
 
+<<<<<<< HEAD
 CCAbsoluteEncoder enc2[] {
+=======
+CCAbsoluteEncoder enc[] {
+>>>>>>> from-work-repo/clean
     {{40, 10}, {108, Channel_1}, 4},
     {{9, 8}, {109, Channel_1}, 4},
 };

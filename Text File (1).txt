@@ -1,0 +1,105 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4037929a
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x10cc
+load:0x403c8700,len:0xc2c
+load:0x403cb700,len:0x30c0
+entry 0x403c88b8
+E (145) esp_core_dump_flash: No core dump partition found!
+E (145) esp_core_dump_flash: No core dump partition found!
+[     7][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[    18][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[    23][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[    29][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[    35][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[    41][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[    47][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[    53][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[    58][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[    64][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[    70][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[    76][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[    82][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[    88][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[    93][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[    99][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   105][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   110][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   116][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   123][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   128][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   134][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   140][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   145][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   151][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   157][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   163][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   169][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   175][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   180][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   186][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   192][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   197][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   204][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   210][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   215][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   221][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   227][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   232][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   238][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   245][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   250][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   256][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   262][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   267][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   273][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   279][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   285][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   291][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   297][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   302][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   308][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   314][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   319][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   325][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   332][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   337][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   343][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   349][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   354][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   360][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   367][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   372][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   378][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   384][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   389][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   395][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   401][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   407][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+[   413][E][Wire.cpp:424] beginTransmission(): could not acquire lock
+[   419][E][Wire.cpp:544] write(): NULL TX buffer pointer
+[   424][E][Wire.cpp:453] endTransmission(): NULL TX buffer pointer
+Guru Meditation Error: Core  1 panic'ed (IntegerDivideByZero). Exception was unhandled.
+
+Core  1 register dump:
+PC      : 0x42009b08  PS      : 0x00060330  A0      : 0x82012190  A1      : 0x3fced2a0
+A2      : 0x00000001  A3      : 0x0000002c  A4      : 0x0000002b  A5      : 0xffffffff
+A6      : 0xffffffff  A7      : 0x3fc9de38  A8      : 0x00000000  A9      : 0x00000000
+A10     : 0x3fc9e3a8  A11     : 0x00002580  A12     : 0x00000030  A13     : 0x3fc9dc08
+A14     : 0xfffffff4  A15     : 0x3fc9dcb4  SAR     : 0x0000001b  EXCCAUSE: 0x00000006
+EXCVADDR: 0x00000000  LBEG    : 0x40056f5c  LEND    : 0x40056f72  LCOUNT  : 0xffffffff
+
+
+Backtrace: 0x42009b05:0x3fced2a0 0x4201218d:0x3fced2c0 0x4037d1dd:0x3fced2e0
+
+
+
+
+ELF file SHA256: 7d75d938e
+
+E (1814) esp_core_dump_flash: Core dump flash config is corrupted! CRC=0x7bd5c66f instead of 0x0
+E (1822) esp_core_dump_elf: Elf write init failed!
+E (1827) esp_core_dump_common: Core dump write failed with error=-1

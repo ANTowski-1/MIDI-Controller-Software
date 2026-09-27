@@ -11,6 +11,7 @@ Licensed under GPL-3.0.*/
 #include <Wire.h>
 #include <SPI.h>
 
+<<<<<<< HEAD
 // Control_Surface include
 #include <Control_Surface.h>
 #include <Arduino_Helpers.h>
@@ -35,3 +36,11 @@ Licensed under GPL-3.0.*/
 #include <lv_conf.h>
 #include "User_Setup.h"
 #include <lvgl_setup.cpp>
+=======
+// Control_Surface header include
+#include "Control_surface_setup.h"
+
+// Display Include
+#include <bb_spi_lcd.h>
+#include <display.h>
+>>>>>>> from-work-repo/clean
