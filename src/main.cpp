@@ -1,39 +1,8 @@
-<<<<<<< HEAD
-#include <main.cpp_includes.h>
-
-// Variables
-uint8_t lastCheckedMuteButton = 1;
-bool currentMuteBtnState = false;
-lv_obj_t* led_mbtn1;
-lv_obj_t* led_mbtn2;
-// extern lv_obj_t* led_mbtn3;
-// extern lv_obj_t* led_mbtn4;
-// extern lv_obj_t* led_mbtn5;
-// extern lv_obj_t* led_mbtn6;
-lv_obj_t* muteButtonLeds[] = {led_mbtn1, led_mbtn2};
-uint16_t last_update{0};
-
-void setup() {
-    // Connection protocols initialisation
-    Wire.begin(47, 48);
-    Serial.begin(9600);
-    SPI.begin(12, 13, 11);
-
-    delay(100);
-
-    // Libs initialisation
-    Control_Surface.begin();
-    lvgl_init();
-    ui_init();
-
-    // Additional setup() code
-    pinMode(ledm1, OUTPUT);
-    digitalWrite(ledm1, 1);
-
-=======
 #include <Arduino.h>
 #include <Control_Surface.h>
 #include <main.cpp_includes.h>
+
+extern Preferences config;
 
 bool inConfigMode = false;
 int menuSelection = 0;
@@ -44,7 +13,9 @@ int lastDispUpdate = 0;
 int lastBtnPotUpdate = 0;
 int currentBtnPotUpdate = 0;
 bool currentMBtnState = false;
+bool lastMBtnState[6] = {0,0,0,0,0,0};
 int currentFaderPosition = 0;
+int lastFadVal[6] = {0,0,0,0,0,0};
 bool ScreenUpdated = false;
 int i{0};
 int lastUpdatedEnc = 0;
@@ -64,12 +35,7 @@ void potBtnUpdate(bool force) {
     while (ScreenUpdated == false) {
             if (lastBtnPotUpdate <= 6) {
                 currentBtnPotUpdate++;
-                
-                //Mute Button Update
                 currentMBtnState = muteButtons[currentBtnPotUpdate - 1].getState();
-                muteDisplay((currentBtnPotUpdate -1), currentMBtnState);
-                
-                //Fader Update
                 currentFaderPosition = pots[currentBtnPotUpdate - 1].getValue();
                 if (lastFadVal[currentBtnPotUpdate -1] != currentFaderPosition 
                     || lastMBtnState[currentBtnPotUpdate -1] != currentMBtnState || force == true) {
@@ -102,7 +68,7 @@ void potBtnUpdate(bool force) {
 
 void setup() {
     Wire.begin(47, 48);
-    Serial.begin(9600);
+    Serial0.begin(115200);
     Serial1.begin(MIDI_BAUD, SERIAL_8N1, 42, 41);
     delay(200);
     loadCSToTransIntStruct();
@@ -115,8 +81,6 @@ void setup() {
     Serial0.println("CS Begun");
     Serial0.flush();
     pinMode(BTN_ENC2, INPUT);
-    // pinMode(BTN3, INPUT_PULLUP);
-    // pinMode(MBTN1, INPUT_PULLUP);
     configBank.select(0);
     Control_Surface.sendCC(20, 127);
     USB_MIDI.sendCC(20, 127);
@@ -124,39 +88,20 @@ void setup() {
     potBtnUpdate(true);
     lastDispUpdate = millis();
     lastConfBtnCheck = millis();
-    Serial.println("Setup complete");
->>>>>>> from-work-repo/clean
+    Serial0.println("Setup complete");
+    Serial0.flush();
 }
 
 void loop() {
     Control_Surface.loop();
-<<<<<<< HEAD
-    
-    // Displaying mute buttons state on screen
-    lastCheckedMuteButton = (lastCheckedMuteButton + 1) % 2;
-    currentMuteBtnState = muteButtons[lastCheckedMuteButton].getState();
-
-    if (currentMuteBtnState == true) {
-        action_led_color_change(muteButtonLeds[lastCheckedMuteButton], 0xFF2A00);
-    } else {
-        action_led_color_change(muteButtonLeds[lastCheckedMuteButton], 0x909090);
-    };
-
-
-    // Updating screen through LVGL every 10 ms
-    if (millis() - last_update >= 10) {
-        lv_timer_handler();
-        last_update = millis();
-    }
-}
-=======
     if (millis() - lastDispUpdate >= 100) {
         potBtnUpdate(false);
     } // Display Update
 
     if (lastConfBtnCheck - millis() >= 100) {
         currentConfBtnState = digitalRead(BTN_ENC2);
-        if (digitalRead(BTN_ENC2) == 0 && currentConfBtnState != lastConfBtnState) {
+        if (digitalRead(BTN_ENC2) == 1 && currentConfBtnState != lastConfBtnState) {
+            // todo: debug why it is automaticly opening settings after startap when digitalread(enc2_btn) == 0
             enc[1].setSpeedMultiply(1);
             settings();
             lcdClear();
@@ -166,4 +111,3 @@ void loop() {
         lastConfBtnState = currentConfBtnState;
     }
 }
->>>>>>> from-work-repo/clean

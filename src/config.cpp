@@ -1,4 +1,8 @@
 #include <Control_Surface.h>
+#include <Preferences.h>
+
+
+Preferences config;
 
 // Lib setup
 extern USBMIDI_Interface USB_MIDI;

@@ -1,5 +1,5 @@
 #include <SPI.h>
-#include <display.h>
+#include <display_and_conf.h>
 #include <bb_spi_lcd.h>
 #include <string>
 #include <iostream>
@@ -56,6 +56,9 @@ void muteDisplay(int btnNum, bool muted) {
 }
 
 void fadersDisplay(int fadNum, int fadPos) {
+    // if (lastFadVal[fadNum] == fadPos) {
+    //     return;
+    // }
     int fadPosition = 30 + 50 * fadNum;
     int fadBarPosition = 15 + 50 * fadNum;
     int fadBarVerticalPosition = 70 + (127 - fadPos) * 90/127;
@@ -122,7 +125,7 @@ void settings(){
     lastEncValue = csGetEncVal(0);
     while(true){
         Control_Surface.loop();
-        if (lastEncCheck - millis() >= 10){
+        if (millis() - lastEncCheck >= 10){
             if (lastEncValue < csGetEncVal(1)) {
                 if (chosenOption < 5) {
                     chosenOption++;
@@ -130,7 +133,6 @@ void settings(){
                     chosenOption = 0;
                 }
                 lastEncValue = csGetEncVal(1);
-                Serial.println(lastEncValue);
                 int yPosition = 55 + 30 * chosenOption;
                 int lastYPosition = 55 + 30 * lastChosenOption;
                 lcd.fillRect(45, lastYPosition, 10, 10, LCD_BG);
@@ -143,7 +145,6 @@ void settings(){
                     chosenOption = 5;
                 }
                 lastEncValue = csGetEncVal(1);
-                Serial.println(lastEncValue);
                 int yPosition = 55 + 30 * chosenOption;
                 int lastYPosition = 55 + 30 * lastChosenOption;
                 lcd.fillRect(45, lastYPosition, 10, 10, LCD_BG);
@@ -202,7 +203,7 @@ void menuTab(int tabNum){
         } // while BTN_ENC2 == low
         while(true){
             Control_Surface.loop();
-            if (lastEncCheck - millis() >= 10){
+            if (millis() - lastEncCheck >= 10){
                 if (lastEncValue > csGetEncVal(1)) {
                     if (chosenOption < 4) {
                         chosenOption++;
@@ -210,7 +211,6 @@ void menuTab(int tabNum){
                         chosenOption = 0;
                     }
                     lastEncValue = csGetEncVal(1);
-                    Serial.println(lastEncValue);
                     int yPosition = 55 + 35 * chosenOption;
                     int lastYPosition = 55 + 35 * lastChosenOption;
                     lcd.fillRect(45, lastYPosition, 10, 10, LCD_BG);
@@ -223,7 +223,6 @@ void menuTab(int tabNum){
                         chosenOption = 4;
                     }
                     lastEncValue = csGetEncVal(1);
-                    Serial.println(lastEncValue);
                     int yPosition = 55 + 35 * chosenOption;
                     int lastYPosition = 55 + 35 * lastChosenOption;
                     lcd.fillRect(45, lastYPosition, 10, 10, LCD_BG);
