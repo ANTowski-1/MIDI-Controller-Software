@@ -25,12 +25,6 @@ int currentConfBtnState{};
 
 OutputBank configBank(1);
 
-int csGetEncVal(int num){
-    return enc[num].getValue();
-}
-bool csGetEncBtnVal(){
-    return buttons[9].getButtonState();
-}
 
 void potBtnUpdate(bool force) {
     ScreenUpdated = false;
@@ -78,12 +72,21 @@ void setup() {
     Serial.begin(9600);
     Serial1.begin(MIDI_BAUD, SERIAL_8N1, 42, 41);
     delay(200);
+    loadCSToTransIntStruct();
+    loadCfg();
+    applyCfg();
+    //Control_Surface | pipes | USB_MIDI;
+    //Control_Surface | pipes | SERIAL_MIDI;
     Control_Surface.begin();
+    // todo: debug why it doesn't send any messeges to midi channels although the pipes seem to have connected succesfully
+    Serial0.println("CS Begun");
+    Serial0.flush();
     pinMode(BTN_ENC2, INPUT);
     // pinMode(BTN3, INPUT_PULLUP);
     // pinMode(MBTN1, INPUT_PULLUP);
     configBank.select(0);
-
+    Control_Surface.sendCC(20, 127);
+    USB_MIDI.sendCC(20, 127);
     tft_init();
     potBtnUpdate(true);
     lastDispUpdate = millis();

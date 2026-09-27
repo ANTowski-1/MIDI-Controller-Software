@@ -8,23 +8,7 @@
 
 BB_SPI_LCD lcd;
 
-// Display Colors definitions
-// Dark Blue, Light Green, Cyan
-/*
-int LCD_BG = 0x0814;
-int LCD_UI = 0x4208;
-int LCD_TXT = 0x035A;
-int LCD_2TXT = 0x035A;
-int LCD_MBTN = 0xf800;
-
-// Colorspaletts.net #3669 TOO Bright UI!
-int LCD_BG = 0x201a19; //0x20c3
-int LCD_UI = 0x916b64; //0xb596
-int LCD_TXT = 0xfbfbf8; //0x934c
-int LCD_2TXT = 0xb2b2b0; //0xffdf
-int LCD_MBTN = 0xd83f2d; //0xd9e5
-*/
-
+// Display Colors Palette — used palette:
 // colorspaletts.net #4805
 int LCD_BG = 0x1104;
 int LCD_UI = 0x2a69;
@@ -32,13 +16,6 @@ int LCD_TXT = 0xdf5d;
 int LCD_2TXT = 0x7eb6;
 int LCD_MBTN = 0x8123;
 
-/*
-int LCD_BG = 0x121212;
-int LCD_UI = 0x2a2a2a;
-int LCD_TXT = 0xe0e0e0;
-int LCD_2TXT = 0xb0b0b0;
-int LCD_MBTN = 0xff3333;
-*/
 
 // Config Screen Variables
 String configCSOpt[5] = {"Control Surfuce", "USB", "BLE", "Serial", "Debug"};
@@ -138,7 +115,9 @@ void settings(){
         x++;
     }
     x = 0;
-    delay(500);
+    while (digitalRead(BTN_ENC2) == 0) {
+        delay(1); // Wait until enc button stops being pressed.
+    }
     lastEncCheck = millis();
     lastEncValue = csGetEncVal(0);
     while(true){
@@ -175,6 +154,9 @@ void settings(){
                     return;
                 } else {
                     menuTab(chosenOption);
+                    while (digitalRead(BTN_ENC2) == 0) {
+                        delay(10); // Wait until enc buttons stops being pressed.
+                    }
                     return;
                 }
             }
@@ -215,7 +197,9 @@ void menuTab(int tabNum){
             x++;
         }   //While
         x = 0;
-        delay(500);
+        while (digitalRead(BTN_ENC2) == 0) {
+            delay(10); // wait until Enc Btn stopps being pressed
+        } // while BTN_ENC2 == low
         while(true){
             Control_Surface.loop();
             if (lastEncCheck - millis() >= 10){
@@ -246,7 +230,8 @@ void menuTab(int tabNum){
                     lcd.fillRect(45, yPosition, 10, 10, LCD_2TXT);
                     lastChosenOption = chosenOption;
                 } else if (digitalRead(BTN_ENC2) == 0){
-                    return;
+		            saveConfByTab(tabNum, chosenOption);
+                    ESP.restart(); // For now ESP is restarted to disconnect all pipes, and connect then the new way at start up.
                 }   // If
                 lastEncCheck = millis();
             }   // If (lastEncCheck - millis(10) > 10)
@@ -256,20 +241,27 @@ void menuTab(int tabNum){
         lcd.setFont(FONT_12x16);
         lcd.setTextColor(LCD_TXT, LCD_BG);
         lcd.print("MIDI Mixer by Anton.");
-        lcd.setCursor(40, 80);
+        lcd.setCursor(40, 75);
         lcd.print("Code revision: ");
         lcd.print(String(VERSION));
-        lcd.setCursor(40, 110);
+        lcd.setCursor(40, 100);
         lcd.print("Licenses:");
-        lcd.setCursor(40, 130);
+        lcd.setCursor(60, 120);
         lcd.print("Software:");
-        lcd.setCursor(60, 150);
+        lcd.setCursor(80, 140);
         lcd.print("GNU GPL v3.0");
-        lcd.setCursor(40, 170);
+        lcd.setCursor(60, 160);
         lcd.print("Hardware:");
-        lcd.setCursor(60, 190);
+        lcd.setCursor(80, 180);
         lcd.print("CERN-OHL-S V2+");
-        delay(500);
+        lcd.setCursor(40, 200);
+        lcd.print("Project repo: ");
+        lcd.setCursor(40, 220);
+        lcd.print("bit.ly/MIDI-mixer-by-ANTON");
+        
+        while (digitalRead(BTN_ENC2) == 0) {
+            delay(10); // Wait untill ENC Btn is stopped being pressed.
+        }
 
         while (true){
             if (millis() - lastEncCheck > 100 && digitalRead(BTN_ENC2) == 0){
