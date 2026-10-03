@@ -2,6 +2,7 @@
 #include <Control_Surface.h>
 #include <main.cpp_includes.h>
 
+
 extern Preferences config;
 
 bool inConfigMode = false;
@@ -29,6 +30,9 @@ int currentConfBtnState{};
 
 OutputBank configBank(1);
 
+int csGetEncVal(int num){
+    return enc[num].getValue();
+}
 
 void potBtnUpdate(bool force) {
     ScreenUpdated = false;
@@ -74,25 +78,25 @@ void setup() {
     loadCSToTransIntStruct();
     loadCfg();
     applyCfg();
-    //Control_Surface | pipes | USB_MIDI;
-    //Control_Surface | pipes | SERIAL_MIDI;
     Control_Surface.begin();
-    // todo: debug why it doesn't send any messeges to midi channels although the pipes seem to have connected succesfully
-    Serial0.println("CS Begun");
+    if (debugMode == 1){
+        Serial0.println("CS Begun");
+    }
     Serial0.flush();
     pinMode(BTN_ENC2, INPUT);
     configBank.select(0);
-    Control_Surface.sendCC(20, 127);
-    USB_MIDI.sendCC(20, 127);
     tft_init();
     potBtnUpdate(true);
     lastDispUpdate = millis();
     lastConfBtnCheck = millis();
     Serial0.println("Setup complete");
-    Serial0.flush();
 }
 
 void loop() {
+    if (debugMode == 1){
+        Serial0.println("Debug: Loop Started");
+    }
+
     Control_Surface.loop();
     if (millis() - lastDispUpdate >= 100) {
         potBtnUpdate(false);
@@ -101,7 +105,6 @@ void loop() {
     if (lastConfBtnCheck - millis() >= 100) {
         currentConfBtnState = digitalRead(BTN_ENC2);
         if (digitalRead(BTN_ENC2) == 1 && currentConfBtnState != lastConfBtnState) {
-            // todo: debug why it is automaticly opening settings after startap when digitalread(enc2_btn) == 0
             enc[1].setSpeedMultiply(1);
             settings();
             lcdClear();
@@ -109,5 +112,9 @@ void loop() {
             enc[1].setSpeedMultiply(4);
         }
         lastConfBtnState = currentConfBtnState;
+    }
+
+    if (debugMode == 1){
+        Serial0.println("Debug: Loop Finished");
     }
 }

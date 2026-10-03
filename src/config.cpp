@@ -8,8 +8,8 @@ Preferences config;
 extern USBMIDI_Interface USB_MIDI;
 extern HardwareSerialMIDI_Interface SERIAL_MIDI;
 extern HardwareSerialDebugMIDI_Interface DEBUG_MIDI;
-// extern USBDebugMIDI_Interface DEBUG_MIDI;
-//extern BluetoothMIDI_Interface BLE_MIDI;
+// extern USBDebugMIDI_Interface DEsBUG_MIDI;
+extern BluetoothMIDI_Interface BLE_MIDI;
 
 extern BidirectionalMIDI_PipeFactory<2> pipes;
 extern MIDI_Pipe pipe_tx1;
@@ -26,7 +26,7 @@ transportCfg cfg;
 TrueMIDI_SinkSource *transportInterfaces[] = {
     nullptr, // slot 0 (Control_Surface) added at runtime
     &USB_MIDI,
-    nullptr, // BLE Midi is temperarly deleted, as for arduino framework 3.3.7 nimBLE problems.
+    &BLE_MIDI, // BLE Midi is temperarly deleted, as for arduino framework 3.3.7 nimBLE problems.
     &SERIAL_MIDI,
     &DEBUG_MIDI,
 };

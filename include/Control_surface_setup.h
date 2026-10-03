@@ -61,7 +61,7 @@ pin_t ledm6 = mcp.pinA(5);
 USBMIDI_Interface USB_MIDI;
 HardwareSerialMIDI_Interface SERIAL_MIDI(Serial1, MIDI_BAUD);
 // USBDebugMIDI_Interface DEBUG_MIDI {115200};
-// BluetoothMIDI_Interface BLE_MIDI;
+BluetoothMIDI_Interface BLE_MIDI;
 HardwareSerialDebugMIDI_Interface DEBUG_MIDI {Serial0, 115200};
 
 // Pipes for connecting them
