@@ -1,19 +1,27 @@
+/*This file contains mechanics allowing for configuring the needed output of the MIDI mixer.
+    
+File is integral part of MIDI-Controller's software, full source code, and license is avalible on github:
+https://github.com/ANTowski-1/MIDI-Controller-Software/tree/main
+
+Copyright 2026, Antoni Kołaczek
+Licensed under GPL-3.0.*/
+
 #include <Control_Surface.h>
 #include <Preferences.h>
 
 
+// Define Preferences instance.
 Preferences config;
 
-// Lib setup
+// External MIDI Interaces and pipes.
 extern USBMIDI_Interface USB_MIDI;
 extern HardwareSerialMIDI_Interface SERIAL_MIDI;
 extern HardwareSerialDebugMIDI_Interface DEBUG_MIDI;
-// extern USBDebugMIDI_Interface DEsBUG_MIDI;
 extern BluetoothMIDI_Interface BLE_MIDI;
 
 extern BidirectionalMIDI_PipeFactory<2> pipes;
-extern MIDI_Pipe pipe_tx1;
 
+// Struct holding all options connections, and define it.
 struct transportCfg {
     uint8_t source1;
     uint8_t source2;
@@ -23,14 +31,16 @@ struct transportCfg {
 
 transportCfg cfg;
 
+// Array holding pointers to each of the MIDI interfaces
 TrueMIDI_SinkSource *transportInterfaces[] = {
     nullptr, // slot 0 (Control_Surface) added at runtime
     &USB_MIDI,
-    &BLE_MIDI, // BLE Midi is temperarly deleted, as for arduino framework 3.3.7 nimBLE problems.
+    &BLE_MIDI,
     &SERIAL_MIDI,
     &DEBUG_MIDI,
 };
 
+// Function for loading the config from NVS partition into the transportCfg stuct.
 void loadCfg() {
     config.begin("midiTransport", true);
     cfg.source1 = config.getUInt("source1", 0); // 1st source, default to Control Surface
@@ -41,6 +51,7 @@ void loadCfg() {
     config.end();
 }
 
+// Function saving the confing into NVS
 void saveCfg() {
     config.begin("midiTransport", false);
     config.putUInt("source1", cfg.source1);
@@ -50,30 +61,25 @@ void saveCfg() {
     config.end(); 
 }
 
+// Function appling the config based on the transportCfg struct
 void applyCfg() {
-    Serial0.print("cfg: ");
-    Serial0.print(cfg.source1);
-    Serial0.print(cfg.source2);
-    Serial0.print(cfg.sink1);
-    Serial0.println(cfg.sink2);
-    for (int i = 0; i < 5; i++)
-        Serial0.printf("iface[%d] = %p\n", i, (void*)transportInterfaces[i]);
-    Serial0.flush();
+    if (debugMode == 1) {
+        Serial0.print("cfg: ");
+        Serial0.print(cfg.source1);
+        Serial0.print(cfg.source2);
+        Serial0.print(cfg.sink1);
+        Serial0.println(cfg.sink2);
+        for (int i = 0; i < 5; i++)
+            Serial0.printf("iface[%d] = %p\n", i, (void*)transportInterfaces[i]);
+    }
+
     *transportInterfaces[cfg.source1] | pipes | *transportInterfaces[cfg.sink1];
-    Serial0.println("Conn 1 OK");
-    Serial0.print("USB has Sink Source pipe: ");
-    Serial0.print(USB_MIDI.hasSinkPipe());
-    Serial0.println(USB_MIDI.hasSourcePipe());
-    Serial0.flush();
-     *transportInterfaces[cfg.source2] | pipes  | *transportInterfaces[cfg.sink2];
-    Serial0.println("Conn 2 OK");
-    Serial0.print("Serial has Sink Source pipe: ");
-    Serial0.print(SERIAL_MIDI.hasSinkPipe());
-    Serial0.println(SERIAL_MIDI.hasSourcePipe());
-    Serial0.flush();
-    Serial0.println("All pipes connected");
+    if (debugMode == 1) Serial0.println("Conn 1 OK");
+    *transportInterfaces[cfg.source2] | pipes  | *transportInterfaces[cfg.sink2];
+    if (debugMode == 1) Serial0.println("Conn 2 OK");
 }
 
+// Function saving the config based on which tab of settings it's called from
 void saveConfByTab(int tabNum, int chosenOption) {
     if (tabNum == 0) {
 	cfg.source1 = chosenOption;
@@ -87,6 +93,7 @@ void saveConfByTab(int tabNum, int chosenOption) {
     saveCfg();
 }
 
+// Change nullptr in transportInterfaces array to Control_Surface ptr
 void loadCSToTransIntStruct() {
     transportInterfaces[0] = &Control_Surface;
 }

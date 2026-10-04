@@ -60,15 +60,13 @@ pin_t ledm6 = mcp.pinA(5);
 // Transport interfaces
 USBMIDI_Interface USB_MIDI;
 HardwareSerialMIDI_Interface SERIAL_MIDI(Serial1, MIDI_BAUD);
-// USBDebugMIDI_Interface DEBUG_MIDI {115200};
 BluetoothMIDI_Interface BLE_MIDI;
 HardwareSerialDebugMIDI_Interface DEBUG_MIDI {Serial0, 115200};
 
-// Pipes for connecting them
+// Pipes for connecting interfaces and Control Surface
 BidirectionalMIDI_PipeFactory<2> pipes;
-MIDI_Pipe pipe_tx1;
 
-// Controls
+// Controls Surfaces
 CCButton buttons[] {
     {BTN1, {110, Channel_1}},
     {BTN2, {111, Channel_1}},
@@ -79,7 +77,7 @@ CCButton buttons[] {
     {BTN7, {116, Channel_1}},
     {BTN8, {117, Channel_1}},
     {BTN9, {118, Channel_1}},
-    {BTN_ENC1, {119, Channel_1}},
+    {BTN_ENC2, {119, Channel_1}},
 };
 
 CCButtonLatched muteButtons[] {
